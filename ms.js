@@ -8,7 +8,24 @@ const options = {
 
 fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
     .then(response => response.json())
-    .then(response => console.log(response))
+    .then(response => {
+        console.log(response.results)
+        const firstmovie = response.results[0]
+        console.log(firstmovie)
+        let temp_html = `
+        <div class="card" id="card">
+        <img src="${firstmovie.poster_path}" alt="movieimg" />
+                    <div class="movietext">
+                        <h2>${firstmovie.original_title}</h2>
+                        <hr style="border: solid 1px white; width: 40%;"></hr>
+                        <h3>${firstmovie.vote_average}</h3>
+                        <p>${firstmovie.overview}</p>
+                    </div>
+        </div> `
+        const moviebox = document.querySelector(".moviebox");
+        console.log(moviebox)
+        moviebox.innerHTML = temp_html;
+    })
     .catch(err => console.error(err));
 
 let el = document.getElementById("card");
@@ -23,14 +40,3 @@ el.onclick = mid;
 // let vote_average = row['vote_average']
 // let elem.overview = row['elem.overview']
 // let id = row['id']
-
-// let temp_html = '
-// <div class="card" id="card">
-// <img src="${poster_path}" alt="movieimg" />
-//             <div class="movietext">
-//                 <h2>${elem.title}</h2>
-//                 <hr style="border: solid 1px white; width: 40%;">
-//                 <h3>${vote_average}</h3>
-//                 <p>${elem.overview}</p>
-//             </div>
-// </div> '
